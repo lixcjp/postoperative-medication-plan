@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>术后用药计划 · 2026年8月14日起</title>
+<style>
+:root{
+  --bg:#f2f5fa; --card:#ffffff; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
+  --blue:#2563eb; --teal:#0ea5e9;
+  --radius:16px;
+  --shadow:0 1px 2px rgba(15,23,42,.05),0 10px 28px -14px rgba(15,23,42,.14);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased}
+button{font-family:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow)}
+h2.sec{font-size:20px;margin:40px 0 16px;display:flex;align-items:center;gap:10px}
+h2.sec::before{content:"";width:5px;height:22px;border-radius:3px;background:linear-gradient(180deg,var(--blue),var(--teal))}
+h2.sec .sec-sub{font-size:13px;color:var(--muted);font-weight:400}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#172554 0%,#1e40af 45%,#0e7490 100%);color:#fff;padding:56px 0 48px}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 85% -10%,rgba(56,189,248,.35),transparent 60%),radial-gradient(500px 260px at 8% 110%,rgba(34,211,238,.25),transparent 60%)}
+.hero .wrap{position:relative}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:6px 14px;border-radius:999px;font-size:13px;letter-spacing:.5px}
+.hero h1{margin:18px 0 6px;font-size:34px;font-weight:800;letter-spacing:1px}
+.hero-sub{font-size:15px;opacity:.92;margin:0 0 22px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px}
+.hero-meta span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:6px 14px;font-size:13px}
+.hero-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:26px}
+.stat{background:rgba(255,255,255,.1);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:14px 16px}
+.stat b{display:block;font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.stat small{font-size:12px;opacity:.85}
+.med-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.m-card{position:relative;background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:16px 18px 14px;border-top:4px solid var(--mc);overflow:hidden}
+.m-head{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700}
+.m-head svg{color:var(--mc);flex:none}
+.m-tag{font-size:11px;font-weight:600;color:var(--mc);background:color-mix(in srgb,var(--mc) 10%,#fff);border:1px solid color-mix(in srgb,var(--mc) 25%,#fff);padding:1px 8px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.m-full{font-size:12.5px;color:var(--muted);margin:2px 0 8px}
+.m-line{font-size:13px;color:#334155;padding:3px 0}
+.m-line::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--mc);margin-right:8px;vertical-align:1px}
+.phase-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.p-card{cursor:pointer;background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px;border-left:5px solid var(--pc);transition:transform .15s ease,box-shadow .15s ease;position:relative}
+.p-card:hover{transform:translateY(-2px);box-shadow:0 12px 30px -12px rgba(15,23,42,.22)}
+.p-card.on{outline:2px solid var(--pc);outline-offset:2px}
+.p-label{font-weight:800;font-size:15px;color:var(--pc)}
+.p-dates{font-size:12.5px;color:var(--muted);margin:2px 0 6px}
+.p-desc{font-size:12.5px;color:#334155;background:color-mix(in srgb,var(--pc) 8%,#fff);border-radius:8px;padding:6px 10px}
+.milestones{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.milestone{font-size:12.5px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:#334155}
+.milestone b{color:var(--blue)}
+.tabs{display:inline-flex;background:#e6ecf5;border-radius:12px;padding:4px;margin-bottom:16px;gap:4px}
+.tab-btn{border:none;background:transparent;padding:9px 22px;border-radius:9px;font-size:14.5px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s}
+.tab-btn.on{background:#fff;color:var(--blue);box-shadow:0 2px 8px rgba(15,23,42,.12)}
+.day-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.d-pill{width:52px;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:5px 0 4px;cursor:pointer;text-align:center;transition:all .12s;line-height:1.2}
+.d-pill:hover{border-color:var(--pc,#2563eb);transform:translateY(-1px)}
+.d-pill .n{display:block;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+.d-pill .w{display:block;font-size:10.5px;color:var(--muted)}
+.d-pill .mo{display:block;font-size:10px;color:var(--pc);font-weight:700;line-height:1}
+.d-pill.on{background:var(--pc);border-color:var(--pc);color:#fff}
+.d-pill.on .w,.d-pill.on .mo{color:rgba(255,255,255,.85)}
+.d-pill.today{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.day-nav{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;margin-bottom:14px}
+.nav-btn{border:1px solid var(--line);background:#fff;border-radius:10px;width:40px;height:40px;font-size:18px;cursor:pointer;color:var(--ink);transition:all .12s;display:flex;align-items:center;justify-content:center}
+.nav-btn:hover{border-color:var(--blue);color:var(--blue)}
+.day-info{flex:1;min-width:220px}
+.day-date{font-size:19px;font-weight:800}
+.day-date small{font-size:13px;color:var(--muted);font-weight:600;margin-left:8px}
+.day-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.badge{font-size:12px;font-weight:600;border-radius:999px;padding:2px 10px;border:1px solid transparent}
+.badge-phase{color:#fff}
+.badge-chg{background:#fef3c7;border-color:#fcd34d;color:#92400e}
+.badge-chg.stop{background:#fee2e2;border-color:#fca5a5;color:#991b1b}
+.badge-chg.taper{background:#dbeafe;border-color:#93c5fd;color:#1e40af}
+.badge-chg.start{background:#dcfce7;border-color:#86efac;color:#166534}
+.timeline{position:relative;padding:22px 18px 26px}
+.tl-item{display:grid;grid-template-columns:62px 30px 1fr;gap:0;position:relative}
+.tl-item + .tl-item{margin-top:12px}
+.tl-time{font-weight:800;font-size:16px;font-variant-numeric:tabular-nums;color:#0f172a;padding-top:10px;text-align:right;padding-right:8px}
+.tl-rail{position:relative;display:flex;justify-content:center}
+.tl-rail::before{content:"";position:absolute;left:50%;transform:translateX(-50%);top:-18px;bottom:-24px;width:2px;background:var(--line)}
+.tl-item:first-child .tl-rail::before{top:14px}
+.tl-item:last-child .tl-rail::before{bottom:auto;height:26px}
+.tl-dot{position:relative;z-index:1;width:14px;height:14px;border-radius:50%;background:var(--mc);border:3px solid #fff;box-shadow:0 0 0 2px var(--mc);margin-top:12px;flex:none}
+.tl-item.meal .tl-dot{background:#94a3b8;box-shadow:0 0 0 2px #94a3b8}
+.tl-card{background:#f8fafc;border:1px solid var(--line);border-left:4px solid var(--mc);border-radius:12px;padding:10px 14px}
+.tl-item.meal .tl-card{border-left-color:#94a3b8;border-style:dashed;opacity:.9}
+.tl-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tl-name{font-weight:700;font-size:15px}
+.tl-kind{font-size:11px;font-weight:600;color:var(--mc);background:color-mix(in srgb,var(--mc) 10%,#fff);border:1px solid color-mix(in srgb,var(--mc) 25%,#fff);padding:1px 8px;border-radius:999px}
+.tl-count{margin-left:auto;font-size:12px;font-weight:700;color:var(--mc);font-variant-numeric:tabular-nums}
+.tl-sub{font-size:13px;color:#475569;margin-top:3px}
+.tl-flags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.flag{font-size:11.5px;font-weight:600;border-radius:7px;padding:2px 8px}
+.flag-gap{background:#fff7ed;color:#c2410c;border:1px solid #fdba74}
+.flag-note{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+.tbl-scroll{overflow-x:auto;border-radius:14px;box-shadow:var(--shadow);background:#fff}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:1060px}
+thead th{position:sticky;top:0;background:#0f172a;color:#fff;padding:11px 10px;font-size:12.5px;text-align:left;white-space:nowrap;z-index:2}
+thead th .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+tbody td{padding:9px 10px;border-bottom:1px solid #eef2f7;vertical-align:top}
+tbody tr:nth-child(even) td{background:#fafbfd}
+tbody tr:hover td{background:#f1f5fb}
+td.date{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+td.date .wk{font-weight:600;color:var(--muted);margin-left:4px;font-size:12px}
+td.date .wk.rest{color:#dc2626}
+.ph-chip{display:inline-block;font-size:11px;font-weight:700;color:#fff;border-radius:6px;padding:2px 7px;white-space:nowrap}
+.tc{display:inline-block;font-size:11.5px;font-weight:700;color:var(--mc);background:color-mix(in srgb,var(--mc) 9%,#fff);border:1px solid color-mix(in srgb,var(--mc) 30%,#fff);border-radius:6px;padding:1.5px 6px;margin:1.5px 3px 1.5px 0;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tc.plain{color:#475569;background:#f1f5f9;border-color:#e2e8f0}
+td.chg{font-size:12px;color:#b45309;min-width:110px}
+td.chg .c-stop{color:#b91c1c}
+td.chg .c-taper{color:#1d4ed8}
+td.chg .c-start{color:#15803d}
+tr.end-row td{background:#fef9ec;font-weight:700;color:#92400e}
+.warn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.w-card{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:16px 18px;border-left:5px solid var(--wc)}
+.w-title{font-weight:800;font-size:15px;color:var(--wc);margin-bottom:8px}
+.w-card ul{margin:0;padding-left:18px}
+.w-card li{font-size:13px;color:#334155;margin:5px 0}
+.foot{text-align:center;color:var(--muted);font-size:12.5px;padding:34px 20px 44px;line-height:1.9}
+.print-bar{display:flex;justify-content:flex-end;margin-bottom:10px}
+.print-btn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:8px 18px;font-size:13.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all .12s}
+.print-btn:hover{border-color:var(--blue);color:var(--blue)}
+.hidden{display:none !important}
+@media (max-width:640px){
+  .hero h1{font-size:26px}
+  .tl-item{grid-template-columns:48px 26px 1fr}
+  .tl-time{font-size:14px}
+  .day-pills{gap:5px}
+  .d-pill{width:47px}
+}
+@media print{
+  body{background:#fff}
+  .hero{padding:26px 0}
+  .no-print{display:none !important}
+  #dayView{display:none !important}
+  #tableView{display:block !important}
+  .card,.tbl-scroll{box-shadow:none;border:1px solid #d7dee8}
+  .tbl-scroll{overflow:visible}
+  table{min-width:0;font-size:10.5px}
+  thead th{background:#1e293b}
+  tbody tr{page-break-inside:avoid}
+  .warn-grid{grid-template-columns:1fr 1fr}
+  h2.sec{margin-top:24px}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="hero-badge">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7s6.3 6.9 6.3 11.6a6.3 6.3 0 1 1-12.6 0C5.7 9.6 12 2.7 12 2.7z"/></svg>
+      眼科术后 · 阶梯减量方案
+    </span>
+    <h1>术后用药计划</h1>
+    <p class="hero-sub">执行起始日：2026 年 8 月 14 日（周五）&nbsp;·&nbsp;全程 31 天&nbsp;·&nbsp;2026 年 9 月 13 日结束</p>
+    <div class="hero-meta">
+      <span>典必殊滴眼液：激素，严格阶梯减量</span>
+      <span>多种眼药水之间间隔 5 分钟</span>
+      <span>眼膏睡前最后使用</span>
+    </div>
+    <div class="hero-stats" id="heroStats"></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <h2 class="sec">药品清单 <span class="sec-sub">共 6 种 · 按医嘱整理</span></h2>
+  <section class="med-grid" id="medGrid"></section>
+
+  <h2 class="sec">分阶段概览 <span class="sec-sub">点击任一阶段可跳转查看当日时间轴</span></h2>
+  <section class="phase-row" id="phaseRow"></section>
+  <div class="milestones" id="milestones"></div>
+
+  <h2 class="sec">详细计划 <span class="sec-sub">精确到整点 · 同时间点眼药水已按 5 分钟错开</span></h2>
+  <div class="print-bar no-print">
+    <button class="print-btn" id="printBtn">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="6" y="14" width="12" height="8" rx="1"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/></svg>
+      打印全程总表
+    </button>
+  </div>
+
+  <div class="tabs no-print">
+    <button class="tab-btn on" id="tabDay">按天时间轴</button>
+    <button class="tab-btn" id="tabTable">全程总表（31 天）</button>
+  </div>
+
+  <section id="dayView">
+    <div class="day-pills no-print" id="dayPills"></div>
+    <div class="card day-nav">
+      <button class="nav-btn no-print" id="navPrev" title="前一天">‹</button>
+      <div class="day-info">
+        <div class="day-date" id="dayDateLabel"></div>
+        <div class="day-badges" id="dayBadges"></div>
+      </div>
+      <button class="nav-btn no-print" id="navNext" title="后一天">›</button>
+    </div>
+    <div class="card timeline" id="timeline"></div>
+    <p class="foot" id="dayNotes" style="text-align:left;padding-top:14px"></p>
+  </section>
+
+  <section id="tableView" class="hidden">
+    <div class="tbl-scroll">
+      <table>
+        <thead id="tblHead"></thead>
+        <tbody id="tblBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <h2 class="sec">重要提醒</h2>
+  <section class="warn-grid">
+    <div class="w-card" style="--wc:#d97706">
+      <div class="w-title">激素阶梯减量（最关键）</div>
+      <ul>
+        <li>典必殊滴眼液按「每 2 小时 → 每日 4 次 → 3 次 → 2 次 → 1 次」逐步减量，9 月 13 日为最后一次，之后<b>直接停药</b>。</li>
+        <li>严禁自行加量、自行突然停药或延长疗程；激素使用期间定期监测眼压。</li>
+      </ul>
+    </div>
+    <div class="w-card" style="--wc:#2563eb">
+      <div class="w-title">滴眼顺序与间隔</div>
+      <ul>
+        <li>同一时间点多种眼药水，本计划已按 5 分钟错开：先抗生素（氧氟沙星）→ 激素（典必殊）→ 最后人工泪液（玻璃酸钠）。</li>
+        <li>眼膏放在睡前最后使用；滴前洗净双手，瓶口不触碰眼睛和睫毛，滴后闭目轻压内眼角 1–2 分钟。</li>
+      </ul>
+    </div>
+    <div class="w-card" style="--wc:#16a34a">
+      <div class="w-title">口服药（仅第 1–3 天）</div>
+      <ul>
+        <li>奥美拉唑 1 粒，早餐前 30 分钟口服；甲泼尼龙 4 片（16mg），早餐后口服，每日 1 次，共 3 天。</li>
+        <li>激素随早餐服用可减轻胃部不适，配合奥美拉唑保护胃黏膜。</li>
+      </ul>
+    </div>
+    <div class="w-card" style="--wc:#dc2626">
+      <div class="w-title">就医指征</div>
+      <ul>
+        <li>眼睛胀痛、视物模糊加重、持续眼红、头痛 → 立即就诊。</li>
+        <li>务必遵医嘱回院复查眼压及眼部恢复情况。</li>
+      </ul>
+    </div>
+    <div class="w-card" style="--wc:#7c3aed">
+      <div class="w-title">作息说明</div>
+      <ul>
+        <li>本计划按 07:30 起床、22:00 睡觉编排；如作息不同，可按相同间隔整体平移。</li>
+        <li>典必殊「每 2 小时」按清醒时间执行，每日 7 次（08:05–20:05）；如医嘱要求夜间亦用药，请遵医嘱。</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="foot">
+    本计划依据医嘱整理，仅供按时用药参考。药物剂量、疗程如有疑问，请以医生当面交代为准。
+  </footer>
+</main>
+
+<script>
+(function(){
+  'use strict';
+
+  var start = new Date(2026,7,14);
+  var TOTAL_DAYS = 31;
+  var WEEK = ['日','一','二','三','四','五','六'];
+
+  function dayOf(d){ var dt=new Date(start.getTime()); dt.setDate(start.getDate()+d-1); return dt; }
+  function fmtDate(d){ return (d.getMonth()+1)+'月'+d.getDate()+'日'; }
+  function wk(d){ return WEEK[d.getDay()]; }
+  function toMin(t){ var p=t.split(':'); return (+p[0])*60+(+p[1]); }
+
+  var ICON = {
+    oral:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9.1" y="2.4" width="5.8" height="19.2" rx="2.9" transform="rotate(30 12 12)"/></svg>',
+    drop:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7s6.3 6.9 6.3 11.6a6.3 6.3 0 1 1-12.6 0C5.7 9.6 12 2.7 12 2.7z"/></svg>',
+    oint:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>'
+  };
+
+  var MEDS = {
+    methyl:{key:'methyl',short:'甲泼尼龙片',full:'甲泼尼龙片（欣甲龙）',kind:'口服',icon:'oral',hex:'#e11d48',dose:'4片（共16mg）',route:'早饭后口服',spec:'4mg×30片/盒',usage:'每日1次 · 早餐后 · 仅第1–3天（8/14–8/16）'},
+    omep:{key:'omep',short:'奥美拉唑',full:'奥美拉唑肠溶胶囊（海灵）',kind:'口服',icon:'oral',hex:'#16a34a',dose:'1粒（20mg）',route:'早餐前30分钟口服',spec:'20mg×14粒/瓶',usage:'每日1次 · 早餐前 · 仅第1–3天（8/14–8/16）'},
+    oflo:{key:'oflo',short:'氧氟沙星',full:'氧氟沙星滴眼液（泰利必妥）',kind:'滴眼液',icon:'drop',hex:'#2563eb',dose:'0.1ml/次',route:'滴手术眼',spec:'15mg:5ml/支',usage:'每日4次（08:00/12:00/16:00/20:00）· 8/14–9/10（共4周）',drop:true},
+    hyal:{key:'hyal',short:'玻璃酸钠',full:'玻璃酸钠滴眼液（润晶）',kind:'滴眼液',icon:'drop',hex:'#0891b2',dose:'0.1ml/次',route:'滴手术眼',spec:'10mg:10ml/瓶',usage:'每日4次（08:10/12:10/16:10/20:10）· 8/14–9/10（共4周）',drop:true},
+    tobra:{key:'tobra',short:'典必殊滴眼液',full:'妥布霉素地塞米松滴眼液（典必殊）',kind:'激素滴眼液',icon:'drop',hex:'#d97706',dose:'1滴/次',route:'滴手术眼',spec:'5ml/瓶',usage:'次数阶梯减量（每2小时→4→3→2→1次/天）· 8/14–9/13（共4周）',drop:true},
+    oint:{key:'oint',short:'典必殊眼膏',full:'妥布霉素地塞米松眼膏（典必殊眼膏）',kind:'眼膏',icon:'oint',hex:'#7c3aed',dose:'适量',route:'睡前涂手术眼',spec:'3.5g/支',usage:'每晚睡前1次（22:00）· 8/14–8/27（共2周）'}
+  };
+
+  var PHASES = [
+    {n:1,from:1,to:3,label:'第1–3天',dates:'8月14–16日',desc:'典必殊每2小时1次（7次/天）＋口服药',hex:'#f43f5e'},
+    {n:2,from:4,to:10,label:'第4–10天',dates:'8月17–23日',desc:'典必殊改为每日4次',hex:'#fb923c'},
+    {n:3,from:11,to:17,label:'第11–17天',dates:'8月24–30日',desc:'典必殊改为每日3次',hex:'#eab308'},
+    {n:4,from:18,to:24,label:'第18–24天',dates:'8月31日–9月6日',desc:'典必殊改为每日2次',hex:'#22c55e'},
+    {n:5,from:25,to:31,label:'第25–31天',dates:'9月7–13日',desc:'典必殊每日1次 → 9月14日直接停药',hex:'#0ea5e9'}
+  ];
+  function phaseOf(day){ for(var i=0;i<PHASES.length;i++){ var p=PHASES[i]; if(day>=p.from&&day<=p.to) return p; } return null; }
+
+  var FREQ_LABEL = {7:'每2小时1次',4:'每日4次',3:'每日3次',2:'每日2次',1:'每日1次'};
+
+  function buildDay(day){
+    var items=[];
+    function push(time,key,note){
+      var m=MEDS[key];
+      items.push({time:time,key:key,name:m.full,short:m.short,kind:m.kind,icon:m.icon,hex:m.hex,dose:m.dose,route:m.route,drop:!!m.drop,note:note||''});
+    }
+    if(day<=3){
+      push('07:30','omep','餐前30分钟');
+      items.push({time:'08:00',meal:'早餐',name:'早餐（8:00前后）',note:'饭后口服甲泼尼龙（见 08:30）；如与滴药时间冲突，可先滴药后进餐'});
+      push('08:30','methyl','早饭后');
+    }
+    if(day<=28){
+      push('08:00','oflo'); push('12:00','oflo'); push('16:00','oflo'); push('20:00','oflo');
+      push('08:10','hyal'); push('12:10','hyal'); push('16:10','hyal'); push('20:10','hyal');
+    }
+    if(day<=3) ['08:05','10:05','12:05','14:05','16:05','18:05','20:05'].forEach(function(t){ push(t,'tobra','每2小时'); });
+    else if(day<=10) ['08:05','12:05','16:05','20:05'].forEach(function(t){ push(t,'tobra'); });
+    else if(day<=17) ['08:05','14:05','20:05'].forEach(function(t){ push(t,'tobra'); });
+    else if(day<=24) ['08:05','20:05'].forEach(function(t){ push(t,'tobra'); });
+    else if(day<=31) ['08:05'].forEach(function(t){ push(t,'tobra'); });
+    if(day<=14) push('22:00','oint','睡前 · 眼膏最后用');
+
+    items.sort(function(a,b){ return a.time<b.time?-1:(a.time>b.time?1:0); });
+
+    var counts={}, seen={};
+    items.forEach(function(it){ if(it.key){ counts[it.key]=(counts[it.key]||0)+1; } });
+    items.forEach(function(it){
+      if(it.key){ seen[it.key]=(seen[it.key]||0)+1; it.idx=seen[it.key]; it.total=counts[it.key]; }
+    });
+    for(var k=1;k<items.length;k++){
+      var a=items[k-1], b=items[k];
+      if(a.key&&b.key&&a.drop&&b.drop&&(toMin(b.time)-toMin(a.time)===5)) b.gap5=true;
+    }
+    return items;
+  }
+
+  function diffInfo(day){
+    var msgs=[];
+    if(day===1){ return [{text:'今日开始用药（第1天）',cls:'start'}]; }
+    var prev=buildDay(day-1), cur=buildDay(day);
+    function freq(items,key){ var n=0; items.forEach(function(i){ if(i.key===key) n++; }); return n; }
+    Object.keys(MEDS).forEach(function(key){
+      var a=freq(prev,key), b=freq(cur,key);
+      if(a>0&&b===0) msgs.push({text:'停用：'+MEDS[key].short,cls:'stop'});
+      else if(a===0&&b>0) msgs.push({text:'开始：'+MEDS[key].short,cls:'start'});
+      else if(b<a&&b>0) msgs.push({text:'减量：'+MEDS[key].short+' '+a+'次/天 → '+b+'次/天',cls:'taper'});
+    });
+    if(day===31) msgs.push({text:'明日（9月14日）起典必殊滴眼液直接停药，疗程结束',cls:'taper'});
+    return msgs;
+  }
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function renderMedGrid(){
+    var html='';
+    Object.keys(MEDS).forEach(function(key){
+      var m=MEDS[key];
+      html+='<div class="m-card" style="--mc:'+m.hex+'">'
+        +'<div class="m-head">'+ICON[m.icon]+'<span>'+esc(m.short)+'</span><span class="m-tag">'+esc(m.kind)+'</span></div>'
+        +'<div class="m-full">'+esc(m.full)+' · '+esc(m.spec)+'</div>'
+        +'<div class="m-line">'+esc(m.dose)+' · '+esc(m.route)+'</div>'
+        +'<div class="m-line">'+esc(m.usage)+'</div>'
+        +'</div>';
+    });
+    document.getElementById('medGrid').innerHTML=html;
+  }
+
+  function renderPhases(){
+    var html='';
+    PHASES.forEach(function(p){
+      html+='<div class="p-card" data-day="'+p.from+'" style="--pc:'+p.hex+'">'
+        +'<div class="p-label">'+p.label+'</div>'
+        +'<div class="p-dates">'+p.dates+'</div>'
+        +'<div class="p-desc">'+p.desc+'</div>'
+        +'</div>';
+    });
+    document.getElementById('phaseRow').innerHTML=html;
+    var ms=[['8月14日','开始：典必殊每2小时'],['8月17日','典必殊→每日4次（口服药已停）'],['8月24日','典必殊→每日3次'],['8月28日','停用典必殊眼膏'],['8月31日','典必殊→每日2次'],['9月7日','典必殊→每日1次'],['9月11日','停用氧氟沙星、玻璃酸钠'],['9月14日','典必殊停药，疗程结束']];
+    document.getElementById('milestones').innerHTML=ms.map(function(x){
+      return '<span class="milestone"><b>'+x[0]+'</b> · '+x[1]+'</span>';
+    }).join('');
+  }
+
+  function renderStats(){
+    var c={}; for(var k in MEDS) c[k]=0;
+    for(var d=1;d<=TOTAL_DAYS;d++){ buildDay(d).forEach(function(i){ if(i.key) c[i.key]++; }); }
+    var html=''
+      +'<div class="stat"><b>31 天</b><small>全程（8/14–9/13）</small></div>'
+      +'<div class="stat"><b>'+c.tobra+' 次</b><small>典必殊滴眼液 · 阶梯减量</small></div>'
+      +'<div class="stat"><b>'+c.oflo+' 次</b><small>氧氟沙星（4周）</small></div>'
+      +'<div class="stat"><b>'+c.hyal+' 次</b><small>玻璃酸钠（4周）</small></div>'
+      +'<div class="stat"><b>'+c.oint+' 晚</b><small>典必殊眼膏（2周）</small></div>'
+      +'<div class="stat"><b>3 天</b><small>口服药（激素＋护胃）</small></div>';
+    document.getElementById('heroStats').innerHTML=html;
+  }
+
+  var curDay=1;
+  function selectDay(d){
+    if(d<1) d=1; if(d>TOTAL_DAYS) d=TOTAL_DAYS;
+    curDay=d;
+    var dt=dayOf(d), ph=phaseOf(d), items=buildDay(d), chgs=diffInfo(d);
+    var count=items.filter(function(i){return i.key;}).length;
+    var kinds={}; items.forEach(function(i){ if(i.key) kinds[i.key]=1; });
+    document.getElementById('dayDateLabel').innerHTML=fmtDate(dt)+' · 星期'+wk(dt)+' <small>第 '+d+' 天 / 共 31 天 · 当日用药 '+Object.keys(kinds).length+' 种 · 共 '+count+' 次</small>';
+    var badges='<span class="badge badge-phase" style="background:'+ph.hex+'">'+ph.label+' · '+ph.dates+'</span>';
+    chgs.forEach(function(c){ badges+='<span class="badge badge-chg '+c.cls+'">'+esc(c.text)+'</span>'; });
+    document.getElementById('dayBadges').innerHTML=badges;
+
+    var html='';
+    items.forEach(function(it){
+      if(it.meal){
+        html+='<div class="tl-item meal">'
+          +'<div class="tl-time">'+it.time+'</div>'
+          +'<div class="tl-rail"><span class="tl-dot"></span></div>'
+          +'<div class="tl-card"><div class="tl-top"><span class="tl-name">'+esc(it.name)+'</span><span class="tl-kind" style="--mc:#64748b;color:#64748b;background:#f1f5f9;border-color:#cbd5e1">生活节点</span></div>'
+          +'<div class="tl-sub">'+esc(it.note)+'</div></div></div>';
+        return;
+      }
+      var m=MEDS[it.key];
+      var countTxt='';
+      if(it.total>1) countTxt='第 '+it.idx+'/'+it.total+' 次'+(it.key==='tobra'?' · '+FREQ_LABEL[it.total]:'');
+      var flags='';
+      if(it.gap5) flags+='<span class="flag flag-gap">与上一种眼药水间隔 5 分钟</span>';
+      if(it.note) flags+='<span class="flag flag-note">'+esc(it.note)+'</span>';
+      html+='<div class="tl-item">'
+        +'<div class="tl-time">'+it.time+'</div>'
+        +'<div class="tl-rail"><span class="tl-dot" style="--mc:'+m.hex+';background:'+m.hex+';box-shadow:0 0 0 2px '+m.hex+'"></span></div>'
+        +'<div class="tl-card" style="--mc:'+m.hex+';border-left-color:'+m.hex+'">'
+        +'<div class="tl-top"><span class="tl-name">'+esc(it.short)+'</span><span class="tl-kind">'+esc(it.kind)+'</span><span class="tl-count">'+countTxt+'</span></div>'
+        +'<div class="tl-sub">'+esc(it.dose)+' · '+esc(it.route)+'</div>'
+        +(flags?'<div class="tl-flags">'+flags+'</div>':'')
+        +'</div></div>';
+    });
+    document.getElementById('timeline').innerHTML=html;
+
+    var pills=document.querySelectorAll('.d-pill');
+    for(var i=0;i<pills.length;i++){
+      pills[i].classList.toggle('on',+pills[i].getAttribute('data-day')===d);
+    }
+    var cards=document.querySelectorAll('.p-card');
+    for(var j=0;j<cards.length;j++){
+      var from=+cards[j].getAttribute('data-day');
+      cards[j].classList.toggle('on',ph.from===from);
+    }
+    document.getElementById('dayNotes').innerHTML=
+      '<b>当日说明：</b>'+(ph.label+'（'+ph.dates+'），'+ph.desc)+'。<br>'
+      +'同一时间点多种眼药水，请按 氧氟沙星（抗生素）→ 典必殊（激素）→ 玻璃酸钠（人工泪液） 的顺序，每种间隔 5 分钟，滴后闭目 1–2 分钟；眼膏睡前最后使用。'
+      +(d<=3?'<br><b>口服药：</b>奥美拉唑 07:30（餐前 30 分钟），甲泼尼龙 08:30（早餐后），仅第 1–3 天。':'');
+  }
+
+  function renderPills(){
+    var html='';
+    for(var d=1;d<=TOTAL_DAYS;d++){
+      var dt=dayOf(d), ph=phaseOf(d);
+      var mo=dt.getDate()===1?'<span class="mo">'+ (dt.getMonth()+1) +'月</span>':'';
+      html+='<button class="d-pill" data-day="'+d+'" style="--pc:'+ph.hex+'">'
+        +mo+'<span class="n">'+dt.getDate()+'</span><span class="w">'+wk(dt)+'</span></button>';
+    }
+    document.getElementById('dayPills').innerHTML=html;
+    var today=new Date();
+    var diff=Math.round((new Date(today.getFullYear(),today.getMonth(),today.getDate()).getTime()-start.getTime())/86400000)+1;
+    if(diff>=1&&diff<=TOTAL_DAYS){
+      document.querySelectorAll('.d-pill').forEach(function(p){ if(+p.getAttribute('data-day')===diff) p.classList.add('today'); });
+      curDay=diff;
+    }
+  }
+
+  function renderTable(){
+    var head='<tr><th>日期</th><th>阶段</th><th>今日变化</th>'
+      +'<th><span class="dot" style="background:#16a34a"></span>口服药</th>'
+      +'<th><span class="dot" style="background:#d97706"></span>典必殊滴眼液</th>'
+      +'<th><span class="dot" style="background:#2563eb"></span>氧氟沙星</th>'
+      +'<th><span class="dot" style="background:#0891b2"></span>玻璃酸钠</th>'
+      +'<th><span class="dot" style="background:#7c3aed"></span>眼膏</th></tr>';
+    document.getElementById('tblHead').innerHTML=head;
+
+    function times(day,key){
+      var arr=buildDay(day).filter(function(i){return i.key===key;}).map(function(i){return i.time;});
+      if(!arr.length) return '<span class="tc plain">—</span>';
+      return arr.map(function(t){ return '<span class="tc" style="--mc:'+MEDS[key].hex+'">'+t+'</span>'; }).join('');
+    }
+    var body='';
+    for(var d=1;d<=TOTAL_DAYS;d++){
+      var dt=dayOf(d), ph=phaseOf(d);
+      var chg=diffInfo(d);
+      var chgHtml=chg.length?chg.map(function(c){ return '<span class="c-'+c.cls+'">'+esc(c.text)+'</span>'; }).join('<br>'):'—';
+      var oral=(d<=3)?('<span class="tc" style="--mc:#16a34a">07:30 奥美拉唑</span><br><span class="tc" style="--mc:#e11d48">08:30 甲泼尼龙</span>'):'<span class="tc plain">—</span>';
+      body+='<tr>'
+        +'<td class="date">'+fmtDate(dt)+'<span class="wk'+(dt.getDay()===0||dt.getDay()===6?' rest':'')+'">周'+wk(dt)+'</span></td>'
+        +'<td><span class="ph-chip" style="background:'+ph.hex+'">'+ph.label+'</span></td>'
+        +'<td class="chg">'+chgHtml+'</td>'
+        +'<td>'+oral+'</td>'
+        +'<td>'+times(d,'tobra')+'</td>'
+        +'<td>'+times(d,'oflo')+'</td>'
+        +'<td>'+times(d,'hyal')+'</td>'
+        +'<td>'+(d<=14?'<span class="tc" style="--mc:#7c3aed">22:00 睡前</span>':'<span class="tc plain">—</span>')+'</td>'
+        +'</tr>';
+    }
+    body+='<tr class="end-row"><td class="date">9月14日起</td><td colspan="7">全部药物停用 · 按医嘱回院复查眼压与眼部恢复情况</td></tr>';
+    document.getElementById('tblBody').innerHTML=body;
+  }
+
+  function bind(){
+    document.getElementById('navPrev').addEventListener('click',function(){ selectDay(curDay-1); });
+    document.getElementById('navNext').addEventListener('click',function(){ selectDay(curDay+1); });
+    document.getElementById('dayPills').addEventListener('click',function(e){
+      var p=e.target.closest('.d-pill'); if(p) selectDay(+p.getAttribute('data-day'));
+    });
+    document.getElementById('phaseRow').addEventListener('click',function(e){
+      var c=e.target.closest('.p-card'); if(c){ switchView('day'); selectDay(+c.getAttribute('data-day')); document.getElementById('dayView').scrollIntoView({behavior:'smooth'}); }
+    });
+    function switchView(v){
+      var day=(v==='day');
+      document.getElementById('tabDay').classList.toggle('on',day);
+      document.getElementById('tabTable').classList.toggle('on',!day);
+      document.getElementById('dayView').classList.toggle('hidden',!day);
+      document.getElementById('tableView').classList.toggle('hidden',day);
+    }
+    document.getElementById('tabDay').addEventListener('click',function(){ switchView('day'); });
+    document.getElementById('tabTable').addEventListener('click',function(){ switchView('table'); });
+    document.getElementById('printBtn').addEventListener('click',function(){ switchView('table'); window.print(); });
+  }
+
+  function init(){
+    renderStats();
+    renderMedGrid();
+    renderPhases();
+    renderPills();
+    renderTable();
+    selectDay(curDay);
+    bind();
+  }
+
+  if(document.addEventListener){
+    document.addEventListener('DOMContentLoaded',init);
+  } else {
+    init();
+  }
+
+  window.__plan={start:start,dayOf:dayOf,buildDay:buildDay,diffInfo:diffInfo,phaseOf:phaseOf,MEDS:MEDS,PHASES:PHASES,TOTAL_DAYS:TOTAL_DAYS};
+})();
+</script>
+</body>
+</html>
