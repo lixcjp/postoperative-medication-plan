@@ -18,20 +18,46 @@ const toMin = t => { const p = t.split(':').map(Number); return p[0] * 60 + p[1]
 const esc = s => String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
 const FREQ = { 7: '每2小时1次', 4: '每日4次', 3: '每日3次', 2: '每日2次', 1: '每日1次' };
 
+function foldLine(line) {
+  if (Buffer.byteLength(line, 'utf8') <= 75) return line;
+  const parts = [];
+  let cur = '';
+  let first = true;
+  const limit = () => (first ? 75 : 74);
+  for (const ch of line) {
+    if (Buffer.byteLength(cur + ch, 'utf8') > limit()) {
+      parts.push(cur);
+      cur = ch;
+      first = false;
+    } else {
+      cur += ch;
+    }
+  }
+  if (cur) parts.push(cur);
+  return parts.join('\r\n ');
+}
+
+function dtstamp() {
+  const d = new Date();
+  const p = n => String(n).padStart(2, '0');
+  return `${d.getUTCFullYear()}${p(d.getUTCMonth() + 1)}${p(d.getUTCDate())}T${p(d.getUTCHours())}${p(d.getUTCMinutes())}${p(d.getUTCSeconds())}Z`;
+}
+
 function ics(events) {
-  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//术后用药计划//提醒//CN', 'CALSCALE:GREGORIAN'];
+  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//PostoperativeMedicationPlan//CN', 'CALSCALE:GREGORIAN'];
   for (const ev of events) {
     lines.push('BEGIN:VEVENT');
     lines.push('UID:' + ev.uid);
+    lines.push('DTSTAMP:' + dtstamp());
     lines.push('DTSTART:' + ev.dt);
     lines.push('DTEND:' + ev.dt);
     lines.push('SUMMARY:' + esc(ev.title));
     if (ev.desc) lines.push('DESCRIPTION:' + esc(ev.desc));
-    lines.push('BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + esc(ev.title), 'TRIGGER:PT0M', 'END:VALARM');
+    lines.push('BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + esc(ev.title), 'TRIGGER:-PT0M', 'END:VALARM');
     lines.push('END:VEVENT');
   }
   lines.push('END:VCALENDAR');
-  return lines.join('\r\n');
+  return lines.map(foldLine).join('\r\n') + '\r\n';
 }
 
 const full = [];
